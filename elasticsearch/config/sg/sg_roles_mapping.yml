@@ -32,6 +32,7 @@ SGS_KIBANA_USER:
   reserved: false
   backend_roles:
   - "kibanauser"
+  -  sg_anonymous_backendrole
   description: "Maps kibanauser to SGS_KIBANA_USER"
 
 SGS_READALL:
@@ -48,3 +49,7 @@ SGS_KIBANA_SERVER:
   reserved: true
   users:
   - "kibanaserver"
+
+sg_anonymous:
+  backend_roles:
+    - sg_anonymous_backendrole

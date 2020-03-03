@@ -13,7 +13,7 @@ services:
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
       - type: volume
-        source: elasticsearch
+        source: elasticsearch1
         target: /usr/share/elasticsearch/data
     ports:
       - "9200:9200"
@@ -24,7 +24,9 @@ services:
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
     networks:
-      - elk
+      # - elk
+      - infra
+
 
   logstash:
     build:
@@ -47,7 +49,8 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      - elk
+      # - elk
+      - infra
     depends_on:
       - elasticsearch
 
@@ -65,13 +68,17 @@ services:
     ports:
       - "5601:5601"
     networks:
-      - elk
+      - infra
+      # - elk
     depends_on:
       - elasticsearch
 
 networks:
   elk:
     driver: bridge
+  infra:
+    external:
+      name: nimbleinfrastaging_default
 
 volumes:
-  elasticsearch:
+  elasticsearch1:

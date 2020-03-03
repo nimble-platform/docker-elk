@@ -42,3 +42,27 @@ _sg_meta:
 #        - "mytenant"
 #      allowed_actions:
 #        - "SGS_KIBANA_ALL_READ"
+
+
+
+#anonymous role
+sg_anonymous:
+  cluster_permissions:
+    - CLUSTER_COMPOSITE_OPS_RO
+  index_permissions:
+    - index_patterns:
+      - "*"
+      allowed_actions:
+        - READ
+
+
+# sg_all_access:
+#   readonly: true
+#   cluster_permissions:
+#     - UNLIMITED
+#   index_permissions:
+#     '*':
+#       '*':
+#         - UNLIMITED
+#   tenants:
+#     admin_tenant: RW

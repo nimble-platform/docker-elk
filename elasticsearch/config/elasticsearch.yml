@@ -13,7 +13,7 @@ xpack.security.enabled: false
 
 ## Search Guard
 #
-searchguard.enterprise_modules_enabled: true
+searchguard.enterprise_modules_enabled: false
 
 searchguard.ssl.transport.keystore_filepath: sg/node-0-keystore.jks
 searchguard.ssl.transport.truststore_filepath: sg/truststore.jks
@@ -21,3 +21,8 @@ searchguard.ssl.transport.enforce_hostname_verification: false
 
 searchguard.authcz.admin_dn:
   - "CN=kirk,OU=client,O=client,l=tEst,C=De"
+
+searchguard.restapi.roles_enabled: ["SGS_ALL_ACCESS","sg_anonymous","SGS_KIBANA_USER"]
+
+discovery.zen.minimum_master_nodes: 1
+discovery.type: single-node
