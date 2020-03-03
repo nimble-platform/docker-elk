@@ -27,8 +27,8 @@ function poll_ready {
 	local cid
 	local output
 
-	# retry for max 180s (36*5s)
-	for _ in $(seq 1 36); do
+	# retry for max 300s (60*5s)
+	for _ in $(seq 1 60); do
 		cid="$(docker ps -q -f label="$label")"
 		if [ -z "${cid:-}" ]; then
 			echo "Container exited"
@@ -76,7 +76,7 @@ curl -X POST -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
 	-d '{"attributes":{"title":"logstash-*","timeFieldName":"@timestamp"}}'
 
 log 'Searching index pattern via Kibana API'
-response="$(curl 'http://localhost:5601/api/saved_objects/_find?type=index-pattern' -u kibanaro:kibanaro)"
+response="$(curl 'http://localhost:5601/api/saved_objects/_find?type=index-pattern' -s -u kibanaro:kibanaro)"
 echo "$response"
 count="$(jq -rn --argjson data "${response}" '$data.total')"
 if [[ $count -ne 1 ]]; then
@@ -92,7 +92,7 @@ curl -X POST 'http://localhost:9200/_refresh' -u admin:admin \
 	-s -w '\n'
 
 log 'Searching message in Elasticsearch'
-response="$(curl 'http://localhost:9200/_count?q=message:dockerelk&pretty' -u readall:readall)"
+response="$(curl 'http://localhost:9200/_count?q=message:dockerelk&pretty' -s -u readall:readall)"
 echo "$response"
 count="$(jq -rn --argjson data "${response}" '$data.count')"
 if [[ $count -ne 1 ]]; then

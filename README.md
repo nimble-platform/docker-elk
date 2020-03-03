@@ -1,7 +1,7 @@
 # Elastic stack (ELK) on Docker
 
 [![Join the chat at https://gitter.im/deviantony/docker-elk](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/deviantony/docker-elk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Elastic Stack version](https://img.shields.io/badge/ELK-7.5.1-blue.svg?style=flat)](https://github.com/deviantony/docker-elk/issues/462)
+[![Elastic Stack version](https://img.shields.io/badge/ELK-7.6.0-blue.svg?style=flat)](https://github.com/deviantony/docker-elk/issues/473)
 [![Build Status](https://api.travis-ci.org/deviantony/docker-elk.svg?branch=searchguard)](https://travis-ci.org/deviantony/docker-elk)
 
 Run the latest version of the [Elastic stack][elk-stack] with Docker and Docker Compose.
@@ -67,8 +67,8 @@ and description of the built-in Search Guard users.**
 
 ### Host setup
 
-* [Docker Engine](https://docs.docker.com/install/) version **17.05+**
-* [Docker Compose](https://docs.docker.com/compose/install/) version **1.12.0+**
+* [Docker Engine](https://docs.docker.com/install/) version **17.05+** or newer
+* [Docker Compose](https://docs.docker.com/compose/install/) version **1.20.0+** or newer
 * 1.5 GB of RAM
 
 > :information_source: Especially on Linux, make sure your user has the [required permissions][linux-postinstall] to
@@ -80,9 +80,9 @@ By default, the stack exposes the following ports:
 * 9300: Elasticsearch TCP transport
 * 5601: Kibana
 
-> :information_source: Elasticsearch's [bootstrap checks][booststap-checks] were purposely disabled to facilitate the
-> setup of the Elastic stack in development environments. For production setups, we recommend users to set up their host
-> according to the instructions from the Elasticsearch documentation: [Important System Configuration][es-sys-config].
+> :warning: Elasticsearch's [bootstrap checks][booststap-checks] were purposely disabled to facilitate the setup of the
+> Elastic stack in development environments. For production setups, we recommend users to set up their host according to
+> the instructions from the Elasticsearch documentation: [Important System Configuration][es-sys-config].
 
 ### SELinux
 
@@ -118,7 +118,7 @@ $ docker-compose up
 
 You can also run all services in the background (detached mode) by adding the `-d` flag to the above command.
 
-> :information_source: You must run `docker-compose build` first whenever you switch branch or update a base image.
+> :warning: You must run `docker-compose build` first whenever you switch branch or update a base image.
 
 If you are starting the stack for the very first time, please read the section below attentively.
 
@@ -193,7 +193,7 @@ Create an index pattern via the Kibana API:
 ```console
 $ curl -XPOST -D- 'http://localhost:5601/api/saved_objects/index-pattern' \
     -H 'Content-Type: application/json' \
-    -H 'kbn-version: 7.5.1' \
+    -H 'kbn-version: 7.6.0' \
     -u kibanaserver:kibanaserver \
     -d '{"attributes":{"title":"logstash-*","timeFieldName":"@timestamp"}}'
 ```
@@ -325,7 +325,7 @@ $ docker-compose build
 $ docker-compose up
 ```
 
-> :information_source: Always pay attention to the [upgrade instructions][upgrade] for each individual component before
+> :warning: Always pay attention to the [upgrade instructions][upgrade] for each individual component before
 performing a stack upgrade.
 
 ### Plugins and integrations
@@ -379,8 +379,8 @@ instead of `elasticsearch`.
 [kbn-docker]: https://www.elastic.co/guide/en/kibana/current/docker.html
 [ls-docker]: https://www.elastic.co/guide/en/logstash/current/docker-config.html
 
-[log4j-props]: https://github.com/elastic/logstash/tree/7.3/docker/data/logstash/config
-[esuser]: https://github.com/elastic/elasticsearch/blob/7.3/distribution/docker/src/docker/Dockerfile#L18-L19
+[log4j-props]: https://github.com/elastic/logstash/tree/7.6/docker/data/logstash/config
+[esuser]: https://github.com/elastic/elasticsearch/blob/7.6/distribution/docker/src/docker/Dockerfile#L23-L24
 
 [upgrade]: https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-upgrade.html
 
