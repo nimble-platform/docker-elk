@@ -39,6 +39,7 @@ SGS_READALL:
   reserved: true
   backend_roles:
   - "readall"
+  - "sg_anonymous_backendrole"
 
 SGS_MANAGE_SNAPSHOTS:
   reserved: true
